@@ -6,7 +6,6 @@ app = connect_API()
 engine, session, base = connect_db()
 
 
-
 @app.get("/pt/aboutMe")
 def get_aboutMe_pt():
     db = session()
