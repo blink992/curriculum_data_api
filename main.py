@@ -8,8 +8,9 @@ engine, session, base = connect_db()
 
 @app.get("/pt/aboutMe/")
 def get_aboutMe_pt():
-    pessoas = session.query(people).all()
-    session.close()
+    db = session()
+    pessoas = db.query(people).all()
+    db.close()
     return [
             {
             "name": p.name,
@@ -17,7 +18,7 @@ def get_aboutMe_pt():
             "about": p.about,
             "address": p.address,
             "phone_01": p.phone_01,
-            "phone_02": p.phone_2,
+            "phone_02": p.phone_02,
             "mail": p.mail,
             "linkedin": p.linkedin
             } for p in pessoas
