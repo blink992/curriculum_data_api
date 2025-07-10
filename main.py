@@ -1,12 +1,13 @@
 from src.ConnectAPI import connect_API
 from src.ConnectDB import connect_db
 from src.models import *
+
 app = connect_API()
 engine, session, base = connect_db()
 
 
 
-@app.get("/pt/aboutMe/")
+@app.get("/pt/aboutMe")
 def get_aboutMe_pt():
     db = session()
     pessoas = db.query(people).all()
