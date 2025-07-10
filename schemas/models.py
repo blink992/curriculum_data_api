@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.orm import declarative_base
@@ -10,9 +11,9 @@ class peopleBase(BaseModel):
     about : str
     address : str
     phone_01 : str
-    phone_02 : str
+    phone_02 : Optional[str]
     mail : str
-    linkedin : str
+    linkedin : Optional[str]
 
 class peopleOut(peopleBase):
     id: int
@@ -21,9 +22,9 @@ class peopleOut(peopleBase):
     about : str
     address : str
     phone_01 : str
-    phone_02 : str
+    phone_02 : Optional[str]
     mail : str
-    linkedin : str
+    linkedin : Optional[str]
     class Config:
         orm_mode = True
 
