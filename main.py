@@ -1,18 +1,27 @@
 from src.ConnectAPI import connect_API
 from src.ConnectDB import connect_db
-
+from src.models import *
 app = connect_API()
-engine, insp, session, base = connect_db()
+engine, session, base = connect_db()
 
 
 
 @app.get("/pt/aboutMe/")
 def get_aboutMe_pt():
-    
-    return {"aboutMe": """Passionate about games and technology since childhood, I began studying programming on my own at the age of 12. 
-            I participated in robotics projects using Arduino during technical school and developed games in Python and web applications 
-            as personal projects. I am currently pursuing a degree in Information Systems and working as an intern at the Municipality of Vitória,
-            focusing on maintaining web systems. I have a strong interest in full stack development and game creation using C++ and Unreal Engine."""}
+    pessoas = session.query(people).all()
+    session.close()
+    return [
+            {
+            "name": p.name,
+            "positions": p.positions,
+            "about": p.about,
+            "address": p.address,
+            "phone_01": p.phone_01,
+            "phone_02": p.phone_2,
+            "mail": p.mail,
+            "linkedin": p.linkedin
+            } for p in pessoas
+            ]
     
 # @app.get("pt/aboutMe")
 # def get_aboutMe_en():
