@@ -15,7 +15,7 @@ class people(Base):
     linkedin = Column(String)
 
     
-class academict_training(Base):
+class academic_training(Base):
     __tablename__  = "academic_training"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)

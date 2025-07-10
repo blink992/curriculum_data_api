@@ -1,28 +1,13 @@
-from src.ConnectAPI import connect_API
-from src.ConnectDB import connect_db
-from src.models import *
+from typing import List
+from api import *
+from database import *
+from models.models import *
+from schemas.models import *
 
-app = connect_API()
-engine, session, base = connect_db()
+@app.get("/pt/aboutMe", response_model=List[peopleOut])
+def get_aboutMe_pt(db: Session = Depends(get_db)):
+    return db.query(people).all()
 
-
-@app.get("/pt/aboutMe")
-def get_aboutMe_pt():
-    db = session()
-    pessoas = db.query(people).all()
-    db.close()
-    return [
-            {
-            "name": p.name,
-            "positions": p.positions,
-            "about": p.about,
-            "address": p.address,
-            "phone_01": p.phone_01,
-            "phone_02": p.phone_02,
-            "mail": p.mail,
-            "linkedin": p.linkedin
-            } for p in pessoas
-            ]
     
 # @app.get("pt/aboutMe")
 # def get_aboutMe_en():
