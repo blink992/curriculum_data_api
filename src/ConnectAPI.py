@@ -11,3 +11,5 @@ def connect_API():
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    
+    return app
