@@ -28,6 +28,7 @@ class peopleOut(peopleBase):
     class Config:
         orm_mode = True
 
+
 # class academic_trainingBase(Base):
 #     __tablename__  = "academic_training"
 #     id = Column(Integer, primary_key=True, index=True)
