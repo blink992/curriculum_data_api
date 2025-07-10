@@ -6,7 +6,7 @@ engine, insp, session, base = connect_db()
 
 
 
-@app.get("pt/aboutMe")
+@app.get("/pt/aboutMe")
 def get_aboutMe_pt():
     
     return {"aboutMe": """Passionate about games and technology since childhood, I began studying programming on my own at the age of 12. 
