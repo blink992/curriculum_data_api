@@ -6,8 +6,12 @@ from database import *
 from models.models import *
 from schemas.models import *
 
+@app.get("/")
+def root():
+    return {"mensagem": "API no ar!"}
+
 @app.get("/pt/aboutMe", response_model=List[peopleOut])
-def get_aboutMe_pt(people_id: int = Query(...), db: Session = Depends(get_db)):
+def get_aboutMe_pt(people_id: int = 0, db: Session = Depends(get_db)):
     return db.query(people).filter(people.id == people_id).first()
 
     
