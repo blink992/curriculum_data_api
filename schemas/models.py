@@ -18,14 +18,6 @@ class people_base(BaseModel):
 
 class people_out(people_base):
     id: int
-    name : str
-    positions : str
-    about : str
-    address : str
-    phone_01 : str
-    phone_02 : Optional[str]
-    mail : str
-    linkedin : Optional[str]
     class Config:
         orm_mode = True
 
