@@ -27,6 +27,7 @@ class people_out_id(BaseModel):
         orm_mode = True
 
 class academic_training_base(BaseModel):
+    people_id : int
     name : str
     institution : str
     level : str
@@ -42,6 +43,7 @@ class academic_training_out(academic_training_base):
 
 
 class extracurricular_courses_base(BaseModel):
+    people_id : int
     name : str
     institution : str
     level : str
@@ -56,6 +58,7 @@ class extracurricular_courses_out(extracurricular_courses_base):
 
 
 class experience_base(BaseModel):
+    people_id : int
     name : str
     enterprise : str
     position : str
@@ -71,6 +74,7 @@ class experience_out(experience_base):
 
     
 class projects_base(BaseModel):
+    people_id : int
     name : str
     tags : str
     resume : str
@@ -85,6 +89,7 @@ class projects_out(projects_base):
         orm_mode = True
     
 class technical_skills_base(BaseModel):
+    people_id : int
     name : str
     level : str
     percent_level : int
@@ -95,6 +100,7 @@ class technical_skills_out(technical_skills_base):
         orm_mode = True
 
 class languages_base(BaseModel):
+    people_id : int
     name : str
     level : str
     

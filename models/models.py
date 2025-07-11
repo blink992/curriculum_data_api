@@ -18,6 +18,7 @@ class people(Base):
 class academic_training(Base):
     __tablename__  = "academic_training"
     id = Column(Integer, primary_key=True, index=True)
+    people_id = Column(Integer)
     name = Column(String)
     institution = Column(String)
     level = Column(String)
@@ -29,6 +30,7 @@ class academic_training(Base):
 class extracurricular_courses(Base):
     __tablename__  = "extracurricular_courses"
     id = Column(Integer, primary_key=True, index=True)
+    people_id = Column(Integer)
     name = Column(String)
     institution = Column(String)
     level = Column(String)
@@ -39,6 +41,7 @@ class extracurricular_courses(Base):
 class experience(Base):
     __tablename__  = "experience"
     id = Column(Integer, primary_key=True, index=True)
+    people_id = Column(Integer)
     name = Column(String)
     enterprise = Column(String)
     position = Column(String)
@@ -51,6 +54,7 @@ class experience(Base):
 class projects(Base):
     __tablename__  = "projects"
     id = Column(Integer, primary_key=True, index=True)
+    people_id = Column(Integer)
     name = Column(String)
     tags = Column(String)
     resume = Column(String)
@@ -63,6 +67,7 @@ class projects(Base):
 class technical_skills(Base):
     __tablename__  = "technical_skills"
     id = Column(Integer, primary_key=True, index=True)
+    people_id = Column(Integer)
     name = Column(String)
     level = Column(String)
     percent_level = Column(Integer)
@@ -70,5 +75,6 @@ class technical_skills(Base):
 class languages(Base):
     __tablename__  = "languages"
     id = Column(Integer, primary_key=True, index=True)
+    people_id = Column(Integer)
     name = Column(String)
     level = Column(String)
