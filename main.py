@@ -20,5 +20,5 @@ def get_people_id(people_name: str, db: Session = Depends(get_db)):
 
 @app.get("/pt/get_academic_training", response_model=academic_training_out)
 def get_academic_training(people_id: int, db: Session = Depends(get_db)):
-    return db.query(academic_training).filter(academic_training.people_id == people_id).first()
+    return db.query(academic_training).filter(academic_training.people_id == people_id).all()
 
