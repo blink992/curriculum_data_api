@@ -33,7 +33,7 @@ class academic_training_base(BaseModel):
     level : str
     address : str
     start_date : date
-    end_date : date
+    end_date : Optional[date]
     about : str
     
 class academic_training_out(academic_training_base):
@@ -64,7 +64,7 @@ class experience_base(BaseModel):
     position : str
     address : str
     start_date : date
-    end_date : date
+    end_date : Optional[date]
     about : str
     
 class experience_out(experience_base):
@@ -80,7 +80,7 @@ class projects_base(BaseModel):
     resume : str
     about : str
     start_date : date
-    end_date : date
+    end_date : Optional[date]
     github : date
 
 class projects_out(projects_base):
