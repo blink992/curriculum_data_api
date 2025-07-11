@@ -1,7 +1,8 @@
 from typing import Optional
 from pydantic import BaseModel
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import declarative_base
+from datetime import date
 
 Base = declarative_base()
 
@@ -34,8 +35,8 @@ class academic_trainingBase(BaseModel):
     institution : str
     level : str
     address : str
-    start_date : Date
-    end_date : Date
+    start_date : date
+    end_date : date
     about : str
     
 class academic_trainingOut(academic_trainingBase):
@@ -44,8 +45,8 @@ class academic_trainingOut(academic_trainingBase):
     institution : str
     level : str
     address : str
-    start_date : Date
-    end_date : Date
+    start_date : date
+    end_date : date
     about : str
     class Config:
         orm_mode = True
@@ -76,8 +77,8 @@ class experienceBase(BaseModel):
     enterprise : str
     position : str
     address : str
-    start_date : Date
-    end_date : Date
+    start_date : date
+    end_date : date
     about : str
     
 class experienceOut(experienceBase):
@@ -86,8 +87,8 @@ class experienceOut(experienceBase):
     enterprise : str
     position : str
     address : str
-    start_date : Date
-    end_date : Date
+    start_date : date
+    end_date : date
     about : str
     class Config:
         orm_mode = True
@@ -98,9 +99,9 @@ class projectsBase(BaseModel):
     tags : str
     resume : str
     about : str
-    start_date : Date
-    end_date : Date
-    github : Date
+    start_date : date
+    end_date : date
+    github : date
 
 class projectsOut(projectsBase):
     id: int
@@ -108,9 +109,9 @@ class projectsOut(projectsBase):
     tags : str
     resume : str
     about : str
-    start_date : Date
-    end_date : Date
-    github : Date
+    start_date : date
+    end_date : date
+    github : date
     class Config:
         orm_mode = True
     
