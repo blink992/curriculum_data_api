@@ -43,7 +43,7 @@ class academic_training_base(BaseModel):
     end_date : date
     about : str
     
-class academic_training__out(academic_training_base):
+class academic_training_out(academic_training_base):
     id: int
     name : str
     institution : str

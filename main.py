@@ -18,7 +18,7 @@ def get_about_me_pt(people_id: int = 0, db: Session = Depends(get_db)):
 def get_people_id(people_name: str, db: Session = Depends(get_db)):
     return db.query(people).filter(people.name == people_name).first()
 
-@app.get("/pt/academic_trainig", response_model=academic_training)
+@app.get("/pt/academic_trainig", response_model=academic_training_out)
 def get_academic_training(people_id: int, db: Session = Depends(get_db)):
     return db.query(people).filter(people.id == people_id).first()
 
