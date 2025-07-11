@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtualenv
+venv/
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+
+# Arquivos sensíveis
+.env
+*.log
+
+# Pytest cache
+.pytest_cache/
