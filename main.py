@@ -10,21 +10,15 @@ from schemas.models import *
 def root():
     return {"mensagem": "API no ar!"}
 
-@app.get("/pt/aboutMe", response_model=peopleOut)
-def get_aboutMe_pt(people_name: str = 'Pedro Arthur Gregório Abreu', db: Session = Depends(get_db)):
-    return db.query(people).filter(people.name.ilike(f"%{people_name}%")).first()
+@app.get("/pt/about_me", response_model=people_out)
+def get_about_me_pt(people_id: int = 0, db: Session = Depends(get_db)):
+    return db.query(people).filter(people.id == people_id).first()
 
-    
-# @app.get("pt/aboutMe")
-# def get_aboutMe_en():
-#     return {"aboutMe": """Apaixonado por jogos e tecnologia desde a infância, iniciei meus estudos em programação por conta própria aos 12 anos.
-#             Participei de projetos de robótica com Arduino nas eletivas do Ensino Médio e desenvolvi jogos em Python e aplicações web como 
-#             projetos pessoais. Atualmente curso Sistemas de Informação e atuo como estagiário na Prefeitura de Vitória, com foco em manutenção 
-#             de sistemas web e desenvolvimento Full Stack. Tenho interesse em desenvolvimento full stack e criação de jogos com C++ e Unreal Engine."""}
+@app.get("/pt/get_people_id", response_model=people_out_id)
+def get_people_id(people_name: str, db: Session = Depends(get_db)):
+    return db.query(people).filter(people.name == people_name).first()
 
-# @app.get("en/academicBackground")
-# def get_academicBackground_en():
-#     return {"academicBackground": []}
-
-# @app.get("pt/academicBackground")
+@app.get("/pt/academic_trainig", response_model=academic_training)
+def get_academic_training(people_id: int, db: Session = Depends(get_db)):
+    return db.query(people).filter(people.id == people_id).first()
 

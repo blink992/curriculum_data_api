@@ -6,7 +6,7 @@ from datetime import date
 
 Base = declarative_base()
 
-class peopleBase(BaseModel):
+class people_base(BaseModel):
     name : str
     positions : str
     about : str
@@ -16,7 +16,7 @@ class peopleBase(BaseModel):
     mail : str
     linkedin : Optional[str]
 
-class peopleOut(peopleBase):
+class people_out(people_base):
     id: int
     name : str
     positions : str
@@ -29,8 +29,12 @@ class peopleOut(peopleBase):
     class Config:
         orm_mode = True
 
+class people_out_id(people_base):
+    id: int
+    class Config:
+        orm_mode = True
 
-class academic_trainingBase(BaseModel):
+class academic_training_base(BaseModel):
     name : str
     institution : str
     level : str
@@ -39,7 +43,7 @@ class academic_trainingBase(BaseModel):
     end_date : date
     about : str
     
-class academic_trainingOut(academic_trainingBase):
+class academic_training__out(academic_training_base):
     id: int
     name : str
     institution : str
@@ -52,7 +56,7 @@ class academic_trainingOut(academic_trainingBase):
         orm_mode = True
 
 
-class extracurricular_coursesBase(BaseModel):
+class extracurricular_courses_base(BaseModel):
     name : str
     institution : str
     level : str
@@ -60,7 +64,7 @@ class extracurricular_coursesBase(BaseModel):
     hours : int
     about : str
     
-class extracurricular_coursesOut(extracurricular_coursesBase):
+class extracurricular_courses_out(extracurricular_courses_base):
     id: int
     name : str
     institution : str
@@ -72,7 +76,7 @@ class extracurricular_coursesOut(extracurricular_coursesBase):
         orm_mode = True
 
 
-class experienceBase(BaseModel):
+class experience_base(BaseModel):
     name : str
     enterprise : str
     position : str
@@ -81,7 +85,7 @@ class experienceBase(BaseModel):
     end_date : date
     about : str
     
-class experienceOut(experienceBase):
+class experience_out(experience_base):
     id: int
     name : str
     enterprise : str
@@ -94,7 +98,7 @@ class experienceOut(experienceBase):
         orm_mode = True
 
     
-class projectsBase(BaseModel):
+class projects_base(BaseModel):
     name : str
     tags : str
     resume : str
@@ -103,7 +107,7 @@ class projectsBase(BaseModel):
     end_date : date
     github : date
 
-class projectsOut(projectsBase):
+class projects_out(projects_base):
     id: int
     name : str
     tags : str
@@ -115,12 +119,12 @@ class projectsOut(projectsBase):
     class Config:
         orm_mode = True
     
-class technical_skillsBase(BaseModel):
+class technical_skills_base(BaseModel):
     name : str
     level : str
     percent_level : int
     
-class technical_skillsOut(technical_skillsBase):
+class technical_skills_out(technical_skills_base):
     id: int
     name : str
     level : str
@@ -128,12 +132,12 @@ class technical_skillsOut(technical_skillsBase):
     class Config:
         orm_mode = True
 
-class languagesBase(BaseModel):
+class languages_base(BaseModel):
     name : str
     level : str
     
     
-class languagesOut(languagesBase):
+class languages_out(languages_base):
     id: int
     name : str
     level : str
