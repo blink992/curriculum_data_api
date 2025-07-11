@@ -10,9 +10,9 @@ from schemas.models import *
 def root():
     return {"mensagem": "API no ar!"}
 
-@app.get("/pt/aboutMe", response_model=List[peopleOut])
-def get_aboutMe_pt(people_id: int = 0, db: Session = Depends(get_db)):
-    return db.query(people).filter(people.id == people_id).first()
+@app.get("/pt/aboutMe", response_model=peopleOut)
+def get_aboutMe_pt(people_name: String = 'Pedro Arthur Gregório Abreu', db: Session = Depends(get_db)):
+    return db.query(people).filter(people.name.ilike(f"%{people_name}%")).first()
 
     
 # @app.get("pt/aboutMe")

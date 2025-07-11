@@ -29,60 +29,112 @@ class peopleOut(peopleBase):
         orm_mode = True
 
 
-# class academic_trainingBase(Base):
-#     __tablename__  = "academic_training"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     institution = Column(String)
-#     level = Column(String)
-#     address = Column(String)
-#     start_date = Column(Date)
-#     end_date = Column(Date)
-#     about = Column(String)
+class academic_trainingBase(BaseModel):
+    name : str
+    institution : str
+    level : str
+    address : str
+    start_date : Date
+    end_date : Date
+    about : str
+    
+class academic_trainingOut(academic_trainingBase):
+    id: int
+    name : str
+    institution : str
+    level : str
+    address : str
+    start_date : Date
+    end_date : Date
+    about : str
+    class Config:
+        orm_mode = True
 
-# class extracurricular_coursesBase(Base):
-#     __tablename__  = "extracurricular_courses"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     institution = Column(String)
-#     level = Column(String)
-#     address = Column(String)
-#     hours = Column(Integer)
-#     about = Column(String)
 
-# class experienceBase(Base):
-#     __tablename__  = "experience"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     enterprise = Column(String)
-#     position = Column(String)
-#     address = Column(String)
-#     start_date = Column(Date)
-#     end_date = Column(Date)
-#     about = Column(String)
+class extracurricular_coursesBase(BaseModel):
+    name : str
+    institution : str
+    level : str
+    address : str
+    hours : int
+    about : str
+    
+class extracurricular_coursesOut(extracurricular_coursesBase):
+    id: int
+    name : str
+    institution : str
+    level : str
+    address : str
+    hours : int
+    about : str
+    class Config:
+        orm_mode = True
+
+
+class experienceBase(BaseModel):
+    name : str
+    enterprise : str
+    position : str
+    address : str
+    start_date : Date
+    end_date : Date
+    about : str
+    
+class experienceOut(experienceBase):
+    id: int
+    name : str
+    enterprise : str
+    position : str
+    address : str
+    start_date : Date
+    end_date : Date
+    about : str
+    class Config:
+        orm_mode = True
+
+    
+class projectsBase(BaseModel):
+    name : str
+    tags : str
+    resume : str
+    about : str
+    start_date : Date
+    end_date : Date
+    github : Date
+
+class projectsOut(projectsBase):
+    id: int
+    name : str
+    tags : str
+    resume : str
+    about : str
+    start_date : Date
+    end_date : Date
+    github : Date
+    class Config:
+        orm_mode = True
+    
+class technical_skillsBase(BaseModel):
+    name : str
+    level : str
+    percent_level : int
+    
+class technical_skillsOut(technical_skillsBase):
+    id: int
+    name : str
+    level : str
+    percent_level : int
+    class Config:
+        orm_mode = True
+
+class languagesBase(BaseModel):
+    name : str
+    level : str
     
     
-# class projectsBase(Base):
-#     __tablename__  = "projects"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     tags = Column(String)
-#     resume = Column(String)
-#     about = Column(String)
-#     start_date = Column(Date)
-#     end_date = Column(Date)
-#     github = Column(Date)
-
-    
-# class technical_skillsBase(Base):
-#     __tablename__  = "technical_skills"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     level = Column(String)
-#     percent_level = Column(Integer)
-
-# class languagesBase(Base):
-#     __tablename__  = "languages"
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     level = Column(String)
+class languagesOut(languagesBase):
+    id: int
+    name : str
+    level : str
+    class Config:
+        orm_mode = True
