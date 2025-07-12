@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
 
 app = FastAPI()
 

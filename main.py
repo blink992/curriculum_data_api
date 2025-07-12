@@ -7,12 +7,12 @@ from models.models import *
 from schemas.models import *
 
 @app.get("/")
-async def root():
+async def get_root():
     return {"mensagem": "curriculum_data_api no ar!"}
 
-@app.get("/health")
-async def health_check():
-    return {"status": "ok"}
+@app.head("/", status_code=status.HTTP_200_OK)
+async def head_root():
+    return None
 
 @app.get("/get/people", response_model=people_out)
 async def get_about_me_pt(people_id: int = 1, db: Session = Depends(get_db)):
