@@ -21,7 +21,7 @@ async def get_people_full(people_id: int = 1, db: Session = Depends(get_db)):
         joinedload(people.academic_trainings),
         joinedload(people.courses),
         joinedload(people.experiences),
-        joinedload(people.designs),
+        joinedload(people.projects_rel),
         joinedload(people.skills),
         joinedload(people.langs)
     ).first()

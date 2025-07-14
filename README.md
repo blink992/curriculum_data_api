@@ -33,7 +33,7 @@ Esta API conecta-se a um banco de dados que armazena informações de várias pe
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/SeuUsuario/NomeDoRepositorio.git
+git clone https://github.com/blink992/curriculum_data_api.git
 cd NomeDoRepositorio
 ```
 

@@ -18,7 +18,7 @@ class people(Base):
     academic_trainings = relationship("academic_training", back_populates="person")
     courses = relationship("extracurricular_courses", back_populates="person")
     experiences = relationship("experience", back_populates="person")
-    designs = relationship("projects", back_populates="person")
+    projects_rel = relationship("projects", back_populates="person")
     skills = relationship("technical_skills", back_populates="person")
     langs = relationship("languages", back_populates="person")
 
@@ -76,9 +76,9 @@ class projects(Base):
     about = Column(String)
     start_date = Column(Date)
     end_date = Column(Date)
-    github = Column(Date)
+    github = Column(String)
     
-    person = relationship("people", back_populates="designs")
+    person = relationship("people", back_populates="projects_rel")
 
     
 class technical_skills(Base):

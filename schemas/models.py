@@ -60,7 +60,7 @@ class projects_base(BaseModel):
     about : str
     start_date : date
     end_date : Optional[date]
-    github : date
+    github : Optional[str]
 
 class projects_out(projects_base):
     id: int
