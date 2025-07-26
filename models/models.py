@@ -46,6 +46,8 @@ class extracurricular_courses(Base):
     institution = Column(String)
     level = Column(String)
     address = Column(String)
+    start_date = Column(Date)
+    end_date = Column(Date)
     hours = Column(Integer)
     about = Column(String)
     

@@ -27,6 +27,8 @@ class extracurricular_courses_base(BaseModel):
     institution : str
     level : str
     address : str
+    start_date : date
+    end_date : Optional[date]
     hours : int
     about : str
     
