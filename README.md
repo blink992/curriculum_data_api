@@ -1,6 +1,6 @@
 # Curriculum Data API
 
-API desenvolvida em Python com FastAPI e SQLAlchemy para gerenciar informações de pessoas e montar currículos dinamicamente.
+API desenvolvida em Python com FastAPI e SQLAlchemy para gerenciar informações de pessoas que serão utilizadas em currículos.
 
 ## Descrição
 
@@ -34,7 +34,7 @@ Esta API conecta-se a um banco de dados que armazena informações de várias pe
 
 ```bash
 git clone https://github.com/blink992/curriculum_data_api.git
-cd NomeDoRepositorio
+cd curriculum_data_api
 ```
 
 2. Crie e ative um ambiente virtual:
@@ -73,3 +73,7 @@ uvicorn main:app --reload
 Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](./LICENSE.md) para mais detalhes.
 
 -----
+## Contato
+
+Para dúvidas ou sugestões, entre em contato em: pedro.agb2004@gmail.com
+
