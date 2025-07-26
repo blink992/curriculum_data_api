@@ -67,3 +67,9 @@ uvicorn main:app --reload
 2. Faça requisições para os endpoints para criar, ler, atualizar e deletar informações de pessoas.
 
 ---
+
+## 📝 Licença
+
+Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](./LICENSE.md) para mais detalhes.
+
+-----
