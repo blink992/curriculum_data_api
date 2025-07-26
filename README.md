@@ -1,4 +1,4 @@
-# API RESTful de Currículos
+# Curriculum Data API
 
 API desenvolvida em Python com FastAPI e SQLAlchemy para gerenciar informações de pessoas e montar currículos dinamicamente.
 
@@ -51,7 +51,7 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 
-4. Configure as variáveis de ambiente (ex: arquivo `.env`) com suas credenciais de banco.
+4. Configure as variáveis de ambiente (crie uma variável DATABASE_URL com a url do banco com os dados esperados em um arquivo `.env`) com suas credenciais de banco, o repositório por padrão não sobe arquivos .env
 
 ---
 
