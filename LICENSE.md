@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 Pedro Arthur Gregório Abreu
+Copyright (c) 2025 Pedro Arthur Gregorio Abreu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
