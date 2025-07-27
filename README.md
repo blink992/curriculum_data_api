@@ -75,12 +75,17 @@ uvicorn main:app --reload
 
 ---
 
-## 📝 Licença
+## Licença
 
 Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](./LICENSE.md) para mais detalhes.
 
+
 -----
+
 ## Contato
 
-Para dúvidas ou sugestões, entre em contato em: pedro.agb2004@gmail.com
+Pedro Arthur Gregorio Abreu - [pedro.agb2004@gmail.com](mailto:pedro.agb2004@gmail.com)
 
+Link do GitHub: [https://github.com/meiyo-aru/curriculum-data-api](https://github.com/meiyo-aru/curriculum-data-api)
+
+-----
