@@ -1,91 +1,90 @@
+````markdown
 # Curriculum Data API
 
-API desenvolvida em Python com FastAPI e SQLAlchemy para gerenciar informações de pessoas que serão utilizadas em currículos.
+An API developed in Python with FastAPI and SQLAlchemy to manage personal information for curriculum purposes.
 
-## Descrição
+## Description
 
-Esta API conecta-se a um banco de dados que armazena informações de várias pessoas, permitindo que clientes (como aplicações web em HTML/JS) façam requisições para recuperar dados e montar currículos personalizados. Ideal para integração com sites de portfólio, sistemas de RH e outras aplicações.
-
----
-
-## Funcionalidades
-
-* CRUD completo de pessoas e seus dados pessoais
-* Consulta personalizada para recuperar informações e montar currículos
-* Integração simples com frontends via requisições HTTP
-* Uso de SQLAlchemy para abstração do banco de dados
-* Documentação automática via Swagger UI
+This API connects to a database storing information about various individuals, allowing clients (like HTML/JS web applications) to make requests to retrieve data and assemble personalized resumes. It's ideal for integration with portfolio websites, HR systems, and other applications.
 
 ---
 
-## Tecnologias
+## Features
+
+* Complete CRUD for individuals and their personal data
+* Custom queries to retrieve information and build resumes
+* Simple integration with frontends via HTTP requests
+* Uses SQLAlchemy for database abstraction
+* Automatic documentation via Swagger UI
+
+---
+
+## Technologies
 
 * Python 3.x
 * FastAPI
 * SQLAlchemy ORM
-* Pydantic (schemas de validação)
-* Uvicorn (servidor ASGI)
+* Pydantic (validation schemas)
+* Uvicorn (ASGI server)
 
 ---
 
-## Instalação
+## Installation
 
-1. Clone o repositório:
+1.  Clone the repository:
 
-```bash
-git clone https://github.com/blink992/curriculum_data_api.git
-cd curriculum_data_api
-```
+    ```bash
+    git clone [https://github.com/blink992/curriculum-data-api.git](https://github.com/blink992/curriculum-data-api.git)
+    cd curriculum_data_api
+    ```
 
-2. Crie e ative um ambiente virtual:
+2.  Create and activate a virtual environment:
 
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-```
+    ```bash
+    python -m venv venv
+    source venv/bin/activate   # Linux/Mac
+    venv\Scripts\activate      # Windows
+    ```
 
-3. Instale as dependências:
+3.  Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-4.  **Configuração do banco de dados:**
-    Este projeto espera que um **banco de dados** esteja rodando em um endereço acessível.
+4.  **Database configuration:**
+    This project expects a **database** to be running at an accessible address.
 
-      * Crie um arquivo `.env` na raiz do projeto (se necessário) e defina a URL do seu banco:
+    * Create a `.env` file in the project root (if necessary) and define your database URL:
         ```
         DATABASE_URL=http://localhost:8000/database
         ```
-      * Certifique-se de que o banco esteja funcionando e acessível.
+    * Ensure the database is running and accessible.
 
 ---
 
-## Uso
+## Usage
 
-1. Inicie o servidor:
+1.  Start the server:
 
-```bash
-uvicorn main:app --reload
-```
+    ```bash
+    uvicorn main:app --reload
+    ```
 
-
-2. Faça requisições para os endpoints para criar, ler, atualizar e deletar informações de pessoas.
+2.  Make requests to the endpoints to create, read, update, and delete individual's information.
 
 ---
 
-## Licença
+## License
 
-Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](./LICENSE.md) para mais detalhes.
+This project is licensed under the **MIT** license. See the [LICENSE](./LICENSE.md) file for more details.
 
+---
 
------
-
-## Contato
+## Contact
 
 Pedro Arthur Gregorio Abreu - [pedro.agb2004@gmail.com](mailto:pedro.agb2004@gmail.com)
 
-Link do GitHub: [https://github.com/meiyo-aru/curriculum-data-api](https://github.com/meiyo-aru/curriculum-data-api)
+GitHub Link: [https://github.com/meiyo-aru/curriculum-data-api](https://github.com/meiyo-aru/curriculum-data-api)
 
------
+---
