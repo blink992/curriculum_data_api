@@ -51,7 +51,14 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 
-4. Configure as variáveis de ambiente (crie uma variável DATABASE_URL com a url do banco com os dados esperados em um arquivo `.env`) com suas credenciais de banco, o repositório por padrão não sobe arquivos .env
+4.  **Configuração do banco de dados:**
+    Este projeto espera que um **banco de dados** esteja rodando em um endereço acessível.
+
+      * Crie um arquivo `.env` na raiz do projeto (se necessário) e defina a URL do seu banco:
+        ```
+        DATABASE_URL=http://localhost:8000/database
+        ```
+      * Certifique-se de que o banco esteja funcionando e acessível.
 
 ---
 
