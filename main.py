@@ -41,8 +41,8 @@ async def get_people(people_id: int = 1, db: Session = Depends(get_db)):
     return data
 
 @app.get("/get/people_id", response_model=people_out_id)
-async def get_people_id(people_name: str = "Pedro Arthur Gregorio Abreu", db: Session = Depends(get_db)):
-    data = db.query(people.id).filter(func.lower(people.name) == people_name.lower().strip()).first()
+async def get_people_id(people_name: str = "%Pedro Arthur Gregorio Abreu%", db: Session = Depends(get_db)):
+    data = db.query(people.id).filter(func.lower(people.name).like("%" + people_name.lower().strip() + "%")).first()
     if data is None:
         raise HTTPException(status_code=404, detail="Person not found")
     
