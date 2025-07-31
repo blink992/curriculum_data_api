@@ -1,11 +1,34 @@
-from typing import List
+from typing import List, cast
+
+from fastapi import Body
 
 from api import *
 from database import *
 from models.models import *
 from schemas.models import *
 
-from sqlalchemy import func
+from passlib.context import CryptContext
+import secrets
+from sqlalchemy import and_, func
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def generate_simple_token(length: int = 32) -> str:
+    """
+    Gera um token hexadecimal aleatório usando o módulo secrets.
+
+    Args:
+        length (int): O comprimento desejado do token em caracteres.
+
+    Returns:
+        str: O token hexadecimal gerado.
+    """
+    if length % 2 != 0:
+        raise ValueError("O comprimento do token deve ser um número par para representação hexadecimal.")
+    num_bytes = length // 2
+    return secrets.token_bytes(num_bytes).hex()
+
+
 
 @app.get("/")
 async def get_root():
@@ -15,23 +38,6 @@ async def get_root():
 async def head_root():
     return None
 
-@app.get("/get", response_model = people_full_out)
-async def get_people_full(people_id: int = 1, db: Session = Depends(get_db)):
-    data = db.query(people).filter(people.id == people_id)\
-    .options(
-        joinedload(people.academic_trainings),
-        joinedload(people.courses),
-        joinedload(people.experiences),
-        joinedload(people.projects_rel),
-        joinedload(people.skills),
-        joinedload(people.langs)
-    ).first()
-    
-    if data is None:
-        raise HTTPException(status_code=404, detail="Person not found")
-    
-    return data
-
 @app.get("/get/people", response_model=people_out)
 async def get_people(people_id: int = 1, db: Session = Depends(get_db)):
     data = db.query(people).filter(people.id == people_id).first()
@@ -39,15 +45,6 @@ async def get_people(people_id: int = 1, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Person not found")
     
     return data
-
-@app.get("/get/people_id", response_model=people_out_id)
-async def get_people_id(people_name: str = "%Pedro Arthur Gregorio Abreu%", db: Session = Depends(get_db)):
-    data = db.query(people.id).filter(func.lower(people.name).like("%" + people_name.lower().strip() + "%")).first()
-    if data is None:
-        raise HTTPException(status_code=404, detail="Person not found")
-    
-    return data
-
 
 @app.get("/get/academic_training", response_model=List[academic_training_out])
 async def get_academic_training(people_id: int, db: Session = Depends(get_db)):
@@ -88,3 +85,124 @@ async def get_technical_skills(people_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Technicall Skill not found")
     
     return data    
+
+@app.get("/get/verify_username")
+async def verify_user(username: str, db: Session = Depends(get_db)):
+    person = db.query(people.id).filter(people.username == username.strip()).first()
+    if person:
+        return True
+    return False
+
+@app.post("/post/people")
+async def post_people(person_data_in: people_full_in, db: Session = Depends(get_db)):
+    
+    if verify_user(person_data_in.username):
+        raise HTTPException(status_code=404, detail="Technicall Skill not found")
+    
+    hashed_password = pwd_context.hash(person_data_in.password)
+    
+    person_data_dict = person_data_in.model_dump(
+        exclude={
+            'password', # Exclui a senha em texto puro
+            'academic_trainings', 
+            'courses', 
+            'experiences', 
+            'projects_rel', 
+            'skills', 
+            'langs'
+        }
+    )
+    
+    person_data_dict['password'] = hashed_password
+    
+    db_person = people(**person_data_dict)
+
+    db.add(db_person)
+    db.flush() 
+    
+    if person_data_in.academic_trainings:
+        for item_data in person_data_in.academic_trainings:
+            db_person.academic_trainings.append(academic_training(**item_data.model_dump()))
+
+    if person_data_in.courses:
+        for item_data in person_data_in.courses:
+            db_person.courses.append(extracurricular_courses(**item_data.model_dump()))
+
+    if person_data_in.experiences:
+        for item_data in person_data_in.experiences:
+            db_person.experiences.append(experience(**item_data.model_dump()))
+
+    if person_data_in.projects_rel:
+        for item_data in person_data_in.projects_rel:
+            db_person.projects_rel.append(projects(**item_data.model_dump()))
+
+    if person_data_in.skills:
+        for item_data in person_data_in.skills:
+            db_person.skills.append(technical_skills(**item_data.model_dump()))
+
+    if person_data_in.langs:
+        for item_data in person_data_in.langs:
+            db_person.langs.append(languages(**item_data.model_dump()))
+
+    db.commit()
+    db.refresh(db_person)
+
+    return "Usuário cadastrado com sucesso!"
+
+@app.post("/post/curriculum_by_token")
+async def curriculum_by_token(token: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    data = db.query(people).filter(people.token == token)\
+    .options(
+        joinedload(people.academic_trainings),
+        joinedload(people.courses),
+        joinedload(people.experiences),
+        joinedload(people.projects_rel),
+        joinedload(people.skills),
+        joinedload(people.langs)
+    ).first()
+    
+    if data is None:
+        raise HTTPException(status_code=404, detail="Invalid token")
+    else:
+        return data
+
+@app.patch("/patch/token")
+async def patch_token(update_token_data: user_login, db: Session = Depends(get_db)):
+    validate_login_data = await verify_pass(update_token_data.username, update_token_data.password, db)
+    if validate_login_data:
+        data = cast(people, db.query(people).filter(people.username == update_token_data.username).first())
+        setattr(data, "token", generate_simple_token())
+        db.commit()
+        db.refresh(data)
+        return data.token
+    else:
+        raise HTTPException(status_code=401, detail="Invalid password or username")
+
+@app.post("/post/curriculum")
+async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
+    if await verify_pass(username=user_data.username, password=user_data.password, db=db):
+        data = db.query(people).filter(people.username == user_data.username.strip())\
+        .options(
+            joinedload(people.academic_trainings),
+            joinedload(people.courses),
+            joinedload(people.experiences),
+            joinedload(people.projects_rel),
+            joinedload(people.skills),
+            joinedload(people.langs)
+        ).first()
+        
+        if data is None:
+            raise HTTPException(status_code=404, detail="Person not found")
+        else:
+            return data
+        
+    else:
+        raise HTTPException(status_code=401, detail="Incorrect password")
+
+async def verify_pass(username: str, password: str, db: Session):
+    person = db.query(people).filter(people.username == username).first()
+    if person != None:
+        password_hash: str = cast(str, person.password)
+        print(password_hash)
+        return pwd_context.verify(password, password_hash)
+    return False

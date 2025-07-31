@@ -15,6 +15,7 @@ class academic_training_base(BaseModel):
     end_date : Optional[date]
     about : str
     
+    
 class academic_training_out(academic_training_base):
     id: int
     class Config:
@@ -91,6 +92,7 @@ class languages_out(languages_base):
         from_attributes = True
 
 class people_base(BaseModel):
+    username: str
     name : str
     positions : str
     about : str
@@ -99,6 +101,8 @@ class people_base(BaseModel):
     phone_02 : Optional[str]
     mail : str
     linkedin : Optional[str]
+    password : str
+    token: Optional[str]
 
 class people_out(people_base):
     id: int
@@ -117,8 +121,21 @@ class people_full_out(people_base):
     class Config:
         from_attributes = True
 
-
-class people_out_id(BaseModel):
+class people_full_in(people_base):
+    academic_trainings: List[academic_training_base] 
+    courses: List[extracurricular_courses_base]
+    experiences: List[experience_base]
+    projects_rel: List[projects_base] 
+    skills: List[technical_skills_base] 
+    langs: List[languages_base]
+    
+class people_out_username(BaseModel):
     id: int
+    username: str
     class Config:
         from_attributes = True
+
+class user_login(BaseModel):
+    username: str
+    password: str
+    

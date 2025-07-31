@@ -6,6 +6,7 @@ Base = declarative_base()
 class people(Base):
     __tablename__  = "people"
     id = Column(Integer, primary_key=True, index=True)
+    username = Column(String)
     name = Column(String)
     positions = Column(String)
     about = Column(String)
@@ -14,6 +15,8 @@ class people(Base):
     phone_02 = Column(String)
     mail = Column(String)
     linkedin = Column(String)
+    password = Column(String)
+    token = Column(String)
     
     academic_trainings = relationship("academic_training", back_populates="person")
     courses = relationship("extracurricular_courses", back_populates="person")
