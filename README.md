@@ -1,4 +1,3 @@
-````markdown
 # Curriculum Data API
 
 An API developed in Python with FastAPI and SQLAlchemy to manage personal information for curriculum purposes.
