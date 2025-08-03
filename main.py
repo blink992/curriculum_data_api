@@ -178,16 +178,17 @@ async def curriculum_by_token(token: str = Body(..., embed=True), db: Session = 
 # Update token of the user
 @app.patch("/patch/token")
 async def patch_token(update_token_data: user_login, db: Session = Depends(get_db)):
-        data = cast(people, db.query(people).filter(people.username == update_token_data.username).first())
-        
-        password_hash: str = cast(str, data.password)
-        if not pwd_context.verify(update_token_data.password, password_hash):
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+    data = cast(people, db.query(people).filter(people.username == update_token_data.username).first())
+    
+    password_hash: str = cast(str, data.password)
+    if not pwd_context.verify(update_token_data.password, password_hash):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
 
-        setattr(data, "token", generate_simple_token())
-        db.commit()
-        db.refresh(data)
-        return data.token
+    setattr(data, "token", generate_simple_token())
+    db.commit()
+    db.refresh(data)
+    
+    return data.token
 
 # Receive data user and validate, if truthy give all curriculum data of user
 @app.post("/post/curriculum")
@@ -208,7 +209,8 @@ async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
     password_hash: str = cast(str, person.password)
     if not pwd_context.verify(user_data.password, password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-
+    
+    return person
 
 # # Receive username and password and validate, return a boolean
 # async def verify_pass(username: str, password: str, db: Session):
