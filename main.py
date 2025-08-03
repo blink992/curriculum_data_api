@@ -197,10 +197,13 @@ async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
     if person is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
 
+    start_password_verify = time.time()
     password_hash: str = cast(str, person.password)
     if not pwd_context.verify(user_data.password, password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-    
+    end_password_verify = time.time()
+    print(f"DEBUG: Tempo da verificação da senha: {end_password_verify - start_password_verify:.4f} segundos")
+
     return person
 
 # # Receive username and password and validate, return a boolean
