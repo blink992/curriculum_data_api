@@ -1,3 +1,4 @@
+import time
 from typing import List, cast
 
 from fastapi import Body
@@ -10,6 +11,7 @@ from schemas.models import *
 from passlib.context import CryptContext
 import secrets
 from sqlalchemy import and_, func
+from sqlalchemy.orm import selectinload
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -160,15 +162,7 @@ async def post_people(person_data_in: people_full_in, db: Session = Depends(get_
 # Receive token and validate this, if truthy give all curriculum data of user
 @app.post("/post/curriculum_by_token")
 async def curriculum_by_token(token: str = Body(..., embed=True), db: Session = Depends(get_db)):
-    data = db.query(people).filter(people.token == token)\
-    .options(
-        joinedload(people.academic_trainings),
-        joinedload(people.courses),
-        joinedload(people.experiences),
-        joinedload(people.projects_rel),
-        joinedload(people.skills),
-        joinedload(people.langs)
-    ).first()
+    data = db.query(people).filter(people.token == token).first()
     
     if data is None:
         raise HTTPException(status_code=404, detail="Invalid token")
@@ -193,15 +187,12 @@ async def patch_token(update_token_data: user_login, db: Session = Depends(get_d
 # Receive data user and validate, if truthy give all curriculum data of user
 @app.post("/post/curriculum")
 async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
-    person = db.query(people).filter(people.username == user_data.username.strip())\
-    .options(
-        joinedload(people.academic_trainings),
-        joinedload(people.courses),
-        joinedload(people.experiences),
-        joinedload(people.projects_rel),
-        joinedload(people.skills),
-        joinedload(people.langs)
-    ).first()
+    start_db_query = time.time()
+    person = db.query(people).filter(people.username == user_data.username.strip()).first()
+
+    end_db_query = time.time()
+    print(f"DEBUG: Tempo da consulta ao DB: {end_db_query - start_db_query:.4f} segundos")
+
 
     if person is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")

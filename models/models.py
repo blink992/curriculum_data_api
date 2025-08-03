@@ -18,12 +18,12 @@ class people(Base):
     password = Column(String)
     token = Column(String)
     
-    academic_trainings = relationship("academic_training", back_populates="person")
-    courses = relationship("extracurricular_courses", back_populates="person")
-    experiences = relationship("experience", back_populates="person")
-    projects_rel = relationship("projects", back_populates="person")
-    skills = relationship("technical_skills", back_populates="person")
-    langs = relationship("languages", back_populates="person")
+    academic_trainings = relationship("academic_training", back_populates="person", lazy="selectin")
+    courses = relationship("extracurricular_courses", back_populates="person", lazy="selectin")
+    experiences = relationship("experience", back_populates="person", lazy="selectin")
+    projects_rel = relationship("projects", back_populates="person", lazy="selectin")
+    skills = relationship("technical_skills", back_populates="person", lazy="selectin")
+    langs = relationship("languages", back_populates="person", lazy="selectin")
 
     
 class academic_training(Base):
