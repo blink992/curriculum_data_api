@@ -13,7 +13,7 @@ import secrets
 from sqlalchemy import and_, func
 from sqlalchemy.orm import selectinload
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=2)
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=4)
 
 def generate_simple_token(length: int = 32) -> str:
     """
