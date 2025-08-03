@@ -178,20 +178,21 @@ async def curriculum_by_token(token: str = Body(..., embed=True), db: Session = 
 # Update token of the user
 @app.patch("/patch/token")
 async def patch_token(update_token_data: user_login, db: Session = Depends(get_db)):
-    validate_login_data = await verify_pass(update_token_data.username, update_token_data.password, db)
-    if validate_login_data:
         data = cast(people, db.query(people).filter(people.username == update_token_data.username).first())
+        
+        password_hash: str = cast(str, data.password)
+        if not pwd_context.verify(update_token_data.password, password_hash):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+
         setattr(data, "token", generate_simple_token())
         db.commit()
         db.refresh(data)
         return data.token
-    else:
-        raise HTTPException(status_code=401, detail="Invalid password or username")
 
 # Receive data user and validate, if truthy give all curriculum data of user
 @app.post("/post/curriculum")
 async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
-    data = db.query(people).filter(people.username == user_data.username.strip())\
+    person = db.query(people).filter(people.username == user_data.username.strip())\
     .options(
         joinedload(people.academic_trainings),
         joinedload(people.courses),
@@ -200,17 +201,20 @@ async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
         joinedload(people.skills),
         joinedload(people.langs)
     ).first()
-    
-    if data is None:
-        raise HTTPException(status_code=404, detail="Person not found")
-    else:
-        return data
-     
-# Receive username and password and validate, return a boolean
-async def verify_pass(username: str, password: str, db: Session):
-    person = db.query(people).filter(people.username == username).first()
-    if person != None:
-        password_hash: str = cast(str, person.password)
-        print(password_hash)
-        return pwd_context.verify(password, password_hash)
-    return False
+
+    if person is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+
+    password_hash: str = cast(str, person.password)
+    if not pwd_context.verify(user_data.password, password_hash):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+
+
+# # Receive username and password and validate, return a boolean
+# async def verify_pass(username: str, password: str, db: Session):
+#     person = db.query(people).filter(people.username == username).first()
+#     if person != None:
+#         password_hash: str = cast(str, person.password)
+#         print(password_hash)
+#         return pwd_context.verify(password, password_hash)
+#     return False
