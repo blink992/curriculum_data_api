@@ -38,6 +38,7 @@ async def get_root():
 async def head_root():
     return None
 
+# Give academic training by id user
 @app.get("/get/people", response_model=people_out)
 async def get_people(people_id: int = 1, db: Session = Depends(get_db)):
     data = db.query(people).filter(people.id == people_id).first()
@@ -46,6 +47,7 @@ async def get_people(people_id: int = 1, db: Session = Depends(get_db)):
     
     return data
 
+# Give academic training by id user
 @app.get("/get/academic_training", response_model=List[academic_training_out])
 async def get_academic_training(people_id: int, db: Session = Depends(get_db)):
     data = db.query(academic_training).filter(academic_training.people_id == people_id).all()
@@ -54,6 +56,7 @@ async def get_academic_training(people_id: int, db: Session = Depends(get_db)):
     
     return data
 
+# Give extracurricular courses by id user
 @app.get("/get/extracurricular_courses", response_model=List[extracurricular_courses_out])
 async def get_extracurricular_courses(people_id: int, db: Session = Depends(get_db)):
     data = db.query(extracurricular_courses).filter(extracurricular_courses.people_id == people_id).all()
@@ -62,6 +65,7 @@ async def get_extracurricular_courses(people_id: int, db: Session = Depends(get_
 
     return data
 
+# Give experience by id user
 @app.get("/get/experience", response_model=List[experience_out])
 async def get_experience(people_id: int, db: Session = Depends(get_db)):
     data = db.query(experience).filter(experience.people_id == people_id).all()
@@ -70,6 +74,7 @@ async def get_experience(people_id: int, db: Session = Depends(get_db)):
     
     return data
 
+# Give projects by id user
 @app.get("/get/projects", response_model=List[projects_out])
 async def get_projects(people_id: int, db: Session = Depends(get_db)):
     data = db.query(projects).filter(projects.people_id == people_id).all()
@@ -78,6 +83,7 @@ async def get_projects(people_id: int, db: Session = Depends(get_db)):
     
     return data
 
+# Give technicall skills by id user
 @app.get("/get/technical_skills", response_model=List[technical_skills_out])
 async def get_technical_skills(people_id: int, db: Session = Depends(get_db)):
     data = db.query(technical_skills).filter(technical_skills.people_id == people_id).all()
@@ -86,6 +92,7 @@ async def get_technical_skills(people_id: int, db: Session = Depends(get_db)):
     
     return data    
 
+# Validate if username exists by id user
 @app.get("/get/verify_username")
 async def verify_user(username: str, db: Session = Depends(get_db)):
     person = db.query(people.id).filter(people.username == username.strip()).first()
@@ -93,6 +100,7 @@ async def verify_user(username: str, db: Session = Depends(get_db)):
         return True
     return False
 
+# Register a new user in the database
 @app.post("/post/people")
 async def post_people(person_data_in: people_full_in, db: Session = Depends(get_db)):
     
@@ -149,6 +157,7 @@ async def post_people(person_data_in: people_full_in, db: Session = Depends(get_
 
     return "Usuário cadastrado com sucesso!"
 
+# Receive token and validate this, if truthy give all curriculum data of user
 @app.post("/post/curriculum_by_token")
 async def curriculum_by_token(token: str = Body(..., embed=True), db: Session = Depends(get_db)):
     data = db.query(people).filter(people.token == token)\
@@ -166,6 +175,7 @@ async def curriculum_by_token(token: str = Body(..., embed=True), db: Session = 
     else:
         return data
 
+# Update token of the user
 @app.patch("/patch/token")
 async def patch_token(update_token_data: user_login, db: Session = Depends(get_db)):
     validate_login_data = await verify_pass(update_token_data.username, update_token_data.password, db)
@@ -178,27 +188,25 @@ async def patch_token(update_token_data: user_login, db: Session = Depends(get_d
     else:
         raise HTTPException(status_code=401, detail="Invalid password or username")
 
+# Receive data user and validate, if truthy give all curriculum data of user
 @app.post("/post/curriculum")
 async def curriculum(user_data: user_login, db: Session = Depends(get_db)):
-    if await verify_pass(username=user_data.username, password=user_data.password, db=db):
-        data = db.query(people).filter(people.username == user_data.username.strip())\
-        .options(
-            joinedload(people.academic_trainings),
-            joinedload(people.courses),
-            joinedload(people.experiences),
-            joinedload(people.projects_rel),
-            joinedload(people.skills),
-            joinedload(people.langs)
-        ).first()
-        
-        if data is None:
-            raise HTTPException(status_code=404, detail="Person not found")
-        else:
-            return data
-        
+    data = db.query(people).filter(people.username == user_data.username.strip())\
+    .options(
+        joinedload(people.academic_trainings),
+        joinedload(people.courses),
+        joinedload(people.experiences),
+        joinedload(people.projects_rel),
+        joinedload(people.skills),
+        joinedload(people.langs)
+    ).first()
+    
+    if data is None:
+        raise HTTPException(status_code=404, detail="Person not found")
     else:
-        raise HTTPException(status_code=401, detail="Incorrect password")
-
+        return data
+     
+# Receive username and password and validate, return a boolean
 async def verify_pass(username: str, password: str, db: Session):
     person = db.query(people).filter(people.username == username).first()
     if person != None:
