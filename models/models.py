@@ -3,29 +3,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Date
 from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
-class people(Base):
-    __tablename__  = "people"
-    id = Column(Integer, primary_key=True, index=True, unique=True)
-    username = Column(String, index=True, unique=True)
-    name = Column(String)
-    positions = Column(String)
-    about = Column(String)
-    address = Column(String)
-    phone_01 = Column(String)
-    phone_02 = Column(String)
-    mail = Column(String)
-    linkedin = Column(String)
-    password = Column(String)
-    token = Column(String, index=True, unique=True)
-    
-    academic_trainings = relationship("academic_training", back_populates="person", lazy="selectin")
-    courses = relationship("extracurricular_courses", back_populates="person", lazy="selectin")
-    experiences = relationship("experience", back_populates="person", lazy="selectin")
-    projects_rel = relationship("projects", back_populates="person", lazy="selectin")
-    skills = relationship("technical_skills", back_populates="person", lazy="selectin")
-    langs = relationship("languages", back_populates="person", lazy="selectin")
 
-    
 class academic_training(Base):
     __tablename__  = "academic_training"
     id = Column(Integer, primary_key=True, index=True, unique=True)
@@ -82,7 +60,7 @@ class projects(Base):
     start_date = Column(Date)
     end_date = Column(Date)
     github = Column(String)
-    
+    importance = Column(Integer)
     person = relationship("people", back_populates="projects_rel")
 
     
@@ -105,3 +83,27 @@ class languages(Base):
     level = Column(String)
 
     person = relationship("people", back_populates="langs")
+    
+class people(Base):
+    __tablename__  = "people"
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    username = Column(String, index=True, unique=True)
+    name = Column(String)
+    positions = Column(String)
+    about = Column(String)
+    address = Column(String)
+    phone_01 = Column(String)
+    phone_02 = Column(String)
+    mail = Column(String)
+    linkedin = Column(String)
+    password = Column(String)
+    token = Column(String, index=True, unique=True)
+    
+    academic_trainings = relationship("academic_training", back_populates="person", lazy="selectin")
+    courses = relationship("extracurricular_courses", back_populates="person", lazy="selectin")
+    experiences = relationship("experience", back_populates="person", lazy="selectin")
+    projects_rel = relationship("projects", back_populates="person", lazy="selectin", order_by=projects.importance.desc())
+    skills = relationship("technical_skills", back_populates="person", lazy="selectin")
+    langs = relationship("languages", back_populates="person", lazy="selectin")
+
+    

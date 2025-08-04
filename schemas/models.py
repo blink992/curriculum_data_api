@@ -64,6 +64,7 @@ class projects_base(BaseModel):
     start_date : date
     end_date : Optional[date]
     github : Optional[str]
+    importance : int
 
 class projects_out(projects_base):
     id: int
