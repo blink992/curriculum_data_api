@@ -16,7 +16,7 @@ class people(Base):
     mail = Column(String)
     linkedin = Column(String)
     password = Column(String)
-    token = Column(String)
+    token = Column(String, index=True, unique=True)
     
     academic_trainings = relationship("academic_training", back_populates="person", lazy="selectin")
     courses = relationship("extracurricular_courses", back_populates="person", lazy="selectin")

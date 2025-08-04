@@ -139,3 +139,6 @@ class user_login(BaseModel):
     username: str
     password: str
     
+class token(BaseModel):
+    token: str
+    
