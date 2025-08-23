@@ -71,6 +71,7 @@ class technical_skills(Base):
     name = Column(String)
     level = Column(String)
     percent_level = Column(Integer)
+    about = Column(String)
     
     person = relationship("people", back_populates="skills")
 

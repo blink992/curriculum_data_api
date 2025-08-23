@@ -76,6 +76,7 @@ class technical_skills_base(BaseModel):
     name : str
     level : str
     percent_level : int
+    about : str
     
 class technical_skills_out(technical_skills_base):
     id: int
